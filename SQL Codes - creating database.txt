@@ -1,0 +1,97 @@
+CREATE DATABASE Pharmacy Authorization Lashgari
+
+
+CREATE TABLE Drug(
+   id_drug int,
+   drug_name varchar(15),
+   d_store int,
+   price int,
+   company varchar(15),
+   type_drug varchar(8),
+   expiration date,
+   production date,
+PRIMARY KEY(id_drug));
+
+
+CREATE TABLE orders(
+   O_code int,
+   id_drug int,
+   drug_count int,
+   pr_code int,
+PRIMARY KEY(O_code));
+
+
+CREATE TABLE Patient(
+   P_id int,
+   p_gender char(7),
+   id_insure int,
+   p_age int,
+   Tel int,
+PRIMARY KEY(P_id));
+
+
+CREATE TABLE Physician(
+   PH_ID integer NOT NULL,
+   PH_NAME varchar(15),
+   PH_GENDER varchar(7),
+   PH_AGE integer,
+   PH_ESP varchar(20),
+PRIMARY KEY(ph_id));
+
+
+CREATE TABLE reception(
+   r_id int,
+   rname varchar(20)  NOT NULL ,
+   r_gender varchar(10),
+   r_esp varchar(20),
+   r_tel int,
+PRIMARY KEY(r_id));
+
+
+CREATE TABLE prescription(
+   pr_code int,
+   pr_date date,
+   total_price int,
+   O_code int,
+   P_id int,
+   ph_id int,
+   r_id int,
+PRIMARY KEY(pr_code));
+
+
+ALTER TABLE orders ADD CONSTRAINT CONSTRAINT_8B72
+FOREIGN KEY (pr_code) REFERENCES prescription (pr_code) ON  DELETE  CASCADE 
+ON  UPDATE CASCADE
+ALTER TABLE orders ADD CONSTRAINT CONSTRAINT_8B7
+FOREIGN KEY (id_drug) REFERENCES Drug (id_drug) ON  DELETE  CASCADE 
+ON  UPDATE CASCADE
+
+ALTER TABLE prescription ADD CONSTRAINT FK_PHAA
+FOREIGN KEY (ph_id) REFERENCES physician(ph_id) ON  DELETE  CASCADE 
+ON  UPDATE CASCADE
+ALTER TABLE prescription ADD CONSTRAINT FK_PAA
+FOREIGN KEY (P_id) REFERENCES patient(P_id) ON  DELETE  CASCADE 
+ON  UPDATE CASCADE
+ALTER TABLE prescription ADD CONSTRAINT FK_RA
+FOREIGN KEY (r_id) REFERENCES reception(r_id) ON  DELETE  CASCADE 
+ON  UPDATE CASCADE
+
+
+insert into Drug values(12,'adualtcold',700,5000,'ghaemdaroo','yes','2022-10-23','2018-12-20')
+insert into Drug values(5,'retalin',10000,1000,'abidi','no','2018-03-08','2010-05-23')
+insert into Drug values(15,'codein',15000,3000,'ghaemdaroo','no','2020-05-14','2018-12-20')
+
+
+insert into orders values(135,15,5)
+insert into orders values(220,5,2)
+insert into orders values(420,12,4)
+
+
+insert into prescription(id_p,r_id,pr_date,total_price,sf_code,pr_code) values (0150,1990,'2019-10-23',65000,220,26)
+insert into prescription(r_id,id_p,pr_date,total_price,sf_code,pr_code) values (2021,0025,'2019-09-08',10000,420,23)
+insert into prescription(r_id,pr_date,total_price,sf_code,pr_code) values (1899,'2019-08-08',23000,135,45)
+
+insert into reception(r_id,rname,r_gender,r_esp,r_tel) values (1899,'lashgari','female','dentist',093650)
+insert into reception(r_id,rname,r_gender,r_esp,pr_code,r_tel) values (2012,'ahmadi','male','biologist',34,0918926)
+
+insert into physician(ph_name,ph_gender,ph_id,ph_age,ph_esp,pr_code) values ('saeedi','female',3450,43,'dentist',26)

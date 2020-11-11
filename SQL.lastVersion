@@ -1,0 +1,6 @@
+select drug.drug_name, ph_name
+from prescription,orders,drug, physician
+where orders.pr_code=prescription.pr_code
+and drug.id_drug=orders.id_drug
+and prescription.ph_id=physician.ph_id 
+and pr_date='2019-12-02'
